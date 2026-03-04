@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car · reliquia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0e0f12;
+            font-family: 'Cormorant Garamond', 'Times New Roman', serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1.5rem;
+            position: relative;
+            color: #fffaf0;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle at 15% 85%, rgba(180, 145, 110, 0.08) 0%, transparent 35%),
+            radial-gradient(circle at 80% 20%, rgba(200, 170, 130, 0.05) 0%, transparent 40%),
+            repeating-linear-gradient(45deg, rgba(255, 245, 230, 0.01) 0px, rgba(255, 245, 230, 0.01) 1px, transparent 1px, transparent 8px);
+            pointer-events: none;
+        }
+
+        .frame {
+            max-width: 900px;
+            width: 100%;
+            position: relative;
+            z-index: 20;
+        }
+
+        .sanctum {
+            background: rgba(18, 20, 24, 0.75);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-radius: 48px 16px 48px 16px;
+            border: 1px solid rgba(230, 210, 180, 0.25);
+            box-shadow: 0 40px 70px -30px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(230, 200, 160, 0.1) inset;
+            padding: 4rem 3.5rem;
+            transition: all 0.5s ease;
+        }
+
+        @media (max-width: 650px) {
+            .sanctum {
+                padding: 3rem 2rem;
+            }
+        }
+
+        .seal {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 2.5rem;
+            position: relative;
+        }
+
+        .seal-decoration {
+            display: flex;
+            gap: 1.2rem;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .seal-decoration i {
+            color: #cbb99b;
+            font-size: 1.1rem;
+            opacity: 0.7;
+        }
+
+        .seal-line {
+            width: 70px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #cbb99b, #e5d5b0, #cbb99b, transparent);
+        }
+
+        h2 {
+            font-size: 4.8rem;
+            font-weight: 400;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #f3ecd9;
+            font-family: 'Cormorant Garamond', serif;
+            line-height: 1;
+            text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.3), 4px 6px 15px rgba(0, 0, 0, 0.6);
+            margin-bottom: 0.5rem;
+            word-spacing: 0.2em;
+            text-align: center;
+        }
+
+        .subtle-crown {
+            color: #d8c5a5;
+            font-size: 1rem;
+            letter-spacing: 0.6em;
+            margin-top: 0.2rem;
+            opacity: 0.65;
+            font-weight: 300;
+        }
+
+        .divine {
+            display: flex;
+            align-items: center;
+            gap: 1.8rem;
+            margin: 2.5rem 0 3.5rem 0;
+        }
+
+        .divine .line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(205, 175, 130, 0.4), rgba(230, 200, 150, 0.7), rgba(205, 175, 130, 0.4), transparent);
+        }
+
+        .divine i {
+            color: #baa585;
+            font-size: 1.4rem;
+            opacity: 0.7;
+        }
+
+        .reliquary-container {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            margin-bottom: 3.5rem;
+        }
+
+        .reliquary-item {
+            display: flex;
+            align-items: flex-start;
+            background: rgba(25, 28, 32, 0.5);
+            border: 1px solid rgba(210, 180, 140, 0.2);
+            border-radius: 24px 8px 24px 8px;
+            padding: 1.8rem 2rem;
+            backdrop-filter: blur(4px);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .reliquary-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 6px;
+            background: linear-gradient(180deg, #b59d7a, #8f826b, #b59d7a);
+            opacity: 0.5;
+        }
+
+        .reliquary-item:hover {
+            background: rgba(35, 40, 48, 0.8);
+            border-color: rgba(220, 190, 140, 0.4);
+            transform: translateX(6px);
+            box-shadow: 0 15px 25px -18px black;
+        }
+
+        .reliquary-icon {
+            font-size: 2.2rem;
+            color: #dac29e;
+            min-width: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .reliquary-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .reliquary-label {
+            font-size: 1.3rem;
+            letter-spacing: 0.15em;
+            color: #b59d7a;
+            text-transform: uppercase;
+            font-weight: 300;
+        }
+
+        .reliquary-value {
+            font-size: 2.2rem;
+            font-weight: 400;
+            color: #f0e2cf;
+            font-family: 'Cormorant Garamond', serif;
+            line-height: 1.2;
+            word-break: break-word;
+        }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(200, 170, 130, 0.2);
+            padding-top: 2.5rem;
+        }
+
+        .sacred-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.9rem 2.2rem;
+            background: rgba(25, 28, 32, 0.7);
+            border: 1px solid rgba(210, 180, 140, 0.35);
+            border-radius: 40px 8px 40px 8px;
+            color: #f0e2cf;
+            text-decoration: none;
+            font-size: 1.6rem;
+            font-weight: 400;
+            letter-spacing: 0.1em;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(4px);
+            box-shadow: 0 10px 20px -15px black;
+            font-family: 'Cormorant Garamond', serif;
+            text-transform: uppercase;
+        }
+
+        .sacred-button i {
+            color: #dac29e;
+            font-size: 1.3rem;
+            transition: transform 0.3s ease;
+        }
+
+        .sacred-button:hover {
+            background: rgba(40, 45, 55, 0.9);
+            border-color: rgba(230, 200, 150, 0.6);
+            transform: translateY(-3px);
+            box-shadow: 0 20px 30px -20px black, 0 0 0 1px rgba(230, 205, 150, 0.1) inset;
+        }
+
+        .sacred-button:hover i {
+            transform: scale(1.2);
+            color: #ecdbba;
+        }
+
+        .edit-button {
+            background: rgba(35, 40, 48, 0.8);
+            border-color: rgba(200, 170, 130, 0.45);
+        }
+
+        .back-button {
+            border-color: rgba(160, 140, 110, 0.25);
+            color: #d8c9b5;
+        }
+
+        .eternity {
+            display: flex;
+            justify-content: center;
+            margin-top: 3.5rem;
+            color: #7a6e5c;
+            font-size: 1rem;
+            letter-spacing: 0.8rem;
+            opacity: 0.4;
+            border-top: 1px solid rgba(200, 170, 130, 0.1);
+            padding-top: 1.8rem;
+        }
+
+        .eternity i {
+            font-size: 1.1rem;
+            color: #8f826b;
+        }
+
+        hr {
+            display: none;
+        }
+
+        .appear {
+            animation: emerge 1.2s ease;
+        }
+
+        @keyframes emerge {
+            0% {
+                opacity: 0;
+                transform: scale(0.98);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="frame appear">
+    <div class="sanctum">
+
+        <div class="seal">
+            <div class="seal-decoration">
+                <span class="seal-line"></span>
+                <i class="fas fa-asterisk"></i>
+                <span class="seal-line"></span>
+            </div>
+            <h2>Information<br>About The Car</h2>
+            <div class="subtle-crown">
+                <i class="fas fa-crown"></i> <i class="fas fa-car"></i> <i class="fas fa-crown"></i>
+            </div>
+        </div>
+
+        <div class="divine">
+            <span class="line"></span>
+            <i class="fas fa-infinity"></i>
+            <span class="line"></span>
+        </div>
+
+        <div class="reliquary-container">
+
+            <div class="reliquary-item">
+                <div class="reliquary-icon">
+                    <i class="fas fa-tag"></i>
+                </div>
+                <div class="reliquary-content">
+                    <span class="reliquary-label">MODEL</span>
+                    <span class="reliquary-value" th:text="${modelGetCar.getModel()}">Toyota Chaser</span>
+                </div>
+            </div>
+
+            <div class="reliquary-item">
+                <div class="reliquary-icon">
+                    <i class="fas fa-cog"></i>
+                </div>
+                <div class="reliquary-content">
+                    <span class="reliquary-label">EQUIPMENT</span>
+                    <span class="reliquary-value" th:text="${modelGetCar.getEquipment()}">Tourer V</span>
+                </div>
+            </div>
+
+            <div class="reliquary-item">
+                <div class="reliquary-icon">
+                    <i class="fas fa-calendar"></i>
+                </div>
+                <div class="reliquary-content">
+                    <span class="reliquary-label">YEAR OF RELEASE</span>
+                    <span class="reliquary-value" th:text="${modelGetCar.getYear_of_release()}">1996</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="actions">
+            <a th:href="@{/car/{car_id}/edit(car_id = ${modelGetCar.getCar_id()})}"
+               class="sacred-button edit-button">
+                <i class="fas fa-pen"></i>
+                <span>Edit</span>
+            </a>
+
+            <a href="/car" class="sacred-button back-button">
+                <i class="fas fa-arrow-left"></i>
+                <span>Back</span>
+            </a>
+        </div>
+
+        <div class="eternity">
+            <i class="fas fa-circle"></i> <i class="fas fa-infinity"></i> <i class="fas fa-circle"></i>
+        </div>
+    </div>
+</div>
+</body>
+</html>

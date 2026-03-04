@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Person</title>
+</head>
+<body>
+
+<h2>Edit Person</h2>
+
+<form th:method="PATCH"
+      th:action="@{/person/{person_id}/edit(person_id = ${modelEditPerson.getPerson_id()})}"
+      th:object="${modelEditPerson}">
+
+    <label for="age">Age </label>
+    <input type="text" th:field="*{age}" id="age">
+
+    <br>
+
+    <label for="name">Name </label>
+    <input type="text" th:field="*{name}" id="name">
+
+    <br>
+
+    <label for="surname">Surname </label>
+    <input type="text" th:field="*{surname}" id="surname">
+
+    <br>
+
+    <input type="submit" value="UPDATE">
+</form>
+
+<br>
+
+<form th:method="DELETE"
+      th:action="@{/person/{person_id}/edit(person_id = ${modelEditPerson.getPerson_id()})}"
+      th:object="${modelEditPerson}">
+
+    <input type="submit" value="DELETE">
+</form>
+
+<hr>
+
+<a th:href="@{/person/{person_id}(person_id = ${modelEditPerson.getPerson_id()})}">Back</a>
+
+</body>
+</html>

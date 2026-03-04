@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buy Car · артефакт</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0e0f12;
+            font-family: 'Cormorant Garamond', 'Times New Roman', serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1.5rem;
+            position: relative;
+            color: #fffaf0;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle at 15% 85%, rgba(180, 145, 110, 0.08) 0%, transparent 35%),
+            radial-gradient(circle at 80% 20%, rgba(200, 170, 130, 0.05) 0%, transparent 40%),
+            repeating-linear-gradient(45deg, rgba(255, 245, 230, 0.01) 0px, rgba(255, 245, 230, 0.01) 1px, transparent 1px, transparent 8px);
+            pointer-events: none;
+        }
+
+        .frame {
+            max-width: 800px;
+            width: 100%;
+            position: relative;
+            z-index: 20;
+        }
+
+        .sanctum {
+            background: rgba(18, 20, 24, 0.75);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-radius: 48px 16px 48px 16px;
+            border: 1px solid rgba(230, 210, 180, 0.25);
+            box-shadow: 0 40px 70px -30px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(230, 200, 160, 0.1) inset;
+            padding: 4rem 3.5rem;
+            transition: all 0.5s ease;
+        }
+
+        @media (max-width: 600px) {
+            .sanctum {
+                padding: 3rem 2rem;
+            }
+        }
+
+        .seal {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .seal-decoration {
+            display: flex;
+            gap: 1.2rem;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .seal-decoration i {
+            color: #cbb99b;
+            font-size: 1.1rem;
+            opacity: 0.7;
+        }
+
+        .seal-line {
+            width: 70px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #cbb99b, #e5d5b0, #cbb99b, transparent);
+        }
+
+        h2 {
+            font-size: 5.2rem;
+            font-weight: 400;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #f3ecd9;
+            font-family: 'Cormorant Garamond', serif;
+            line-height: 0.95;
+            text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.3), 4px 6px 15px rgba(0, 0, 0, 0.6);
+            margin-bottom: 0.5rem;
+            word-spacing: 0.2em;
+        }
+
+        .subtle-crown {
+            color: #d8c5a5;
+            font-size: 1rem;
+            letter-spacing: 0.6em;
+            margin-top: 0.2rem;
+            opacity: 0.65;
+            font-weight: 300;
+        }
+
+        .divine {
+            display: flex;
+            align-items: center;
+            gap: 1.8rem;
+            margin: 2rem 0 3rem 0;
+        }
+
+        .divine .line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(205, 175, 130, 0.4), rgba(230, 200, 150, 0.7), rgba(205, 175, 130, 0.4), transparent);
+        }
+
+        .divine i {
+            color: #baa585;
+            font-size: 1.4rem;
+            opacity: 0.7;
+        }
+
+        .user-reliquary {
+            display: flex;
+            align-items: center;
+            background: rgba(25, 28, 32, 0.6);
+            border: 1px solid rgba(210, 180, 140, 0.25);
+            border-radius: 32px 8px 32px 8px;
+            padding: 1.8rem 2rem;
+            backdrop-filter: blur(4px);
+            margin-bottom: 2.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .user-reliquary::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 8px;
+            background: linear-gradient(180deg, #b59d7a, #8f826b, #b59d7a);
+            opacity: 0.6;
+        }
+
+        .user-icon {
+            font-size: 2.4rem;
+            color: #dac29e;
+            min-width: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .user-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .user-label {
+            font-size: 1.3rem;
+            letter-spacing: 0.15em;
+            color: #b59d7a;
+            text-transform: uppercase;
+            font-weight: 300;
+        }
+
+        .user-value {
+            font-size: 2.4rem;
+            font-weight: 400;
+            color: #f0e2cf;
+            font-family: 'Cormorant Garamond', serif;
+            line-height: 1.2;
+        }
+
+        .sacred-form {
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            position: relative;
+        }
+
+        .form-group label {
+            font-size: 1.6rem;
+            letter-spacing: 0.15em;
+            color: #d8c9b5;
+            font-weight: 400;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .form-group label i {
+            color: #b59d7a;
+            font-size: 1.4rem;
+            opacity: 0.9;
+        }
+
+        .sacred-select {
+            background: rgba(25, 28, 32, 0.7);
+            border: 1px solid rgba(210, 180, 140, 0.3);
+            border-radius: 16px 4px 16px 4px;
+            padding: 1.2rem 1.8rem;
+            font-size: 1.6rem;
+            color: #f0e2cf;
+            font-family: 'Cormorant Garamond', serif;
+            letter-spacing: 0.05em;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(4px);
+            outline: none;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23b59d7a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+            background-repeat: no-repeat;
+            background-position: right 1.5rem center;
+            background-size: 1.8rem;
+        }
+
+        .sacred-select:focus {
+            border-color: rgba(230, 200, 150, 0.8);
+            background: rgba(35, 40, 48, 0.9);
+            box-shadow: 0 0 20px rgba(200, 170, 110, 0.15), 0 0 0 1px rgba(230, 205, 150, 0.2) inset;
+            transform: translateY(-2px);
+        }
+
+        .sacred-select option {
+            background: #1e2126;
+            color: #f0e2cf;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.6rem;
+            padding: 1rem;
+            border: none;
+        }
+
+        .submit-section {
+            display: flex;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .sacred-submit {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.2rem;
+            padding: 1.2rem 3.5rem;
+            background: rgba(30, 45, 40, 0.8);
+            border: 1px solid rgba(100, 160, 140, 0.5);
+            border-radius: 40px 8px 40px 8px;
+            color: #f3ecd9;
+            font-size: 2rem;
+            font-weight: 400;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            font-family: 'Cormorant Garamond', serif;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(4px);
+            cursor: pointer;
+            width: 100%;
+            box-shadow: 0 15px 25px -20px black;
+        }
+
+        .sacred-submit i {
+            color: #8fc9b5;
+            font-size: 1.6rem;
+            transition: transform 0.3s ease;
+        }
+
+        .sacred-submit:hover {
+            background: rgba(45, 70, 60, 0.9);
+            border-color: rgba(80, 200, 170, 0.7);
+            transform: translateY(-4px);
+            box-shadow: 0 25px 35px -25px black, 0 0 0 1px rgba(80, 200, 170, 0.2) inset;
+        }
+
+        .sacred-submit:hover i {
+            transform: scale(1.2) rotate(90deg);
+            color: #b0e6d6;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: center;
+            margin-top: 2.5rem;
+            border-top: 1px solid rgba(200, 170, 130, 0.2);
+            padding-top: 2.5rem;
+        }
+
+        .sacred-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.8rem 2.2rem;
+            background: rgba(25, 28, 32, 0.6);
+            border: 1px solid rgba(160, 140, 110, 0.25);
+            border-radius: 40px 8px 40px 8px;
+            color: #d8c9b5;
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: 400;
+            letter-spacing: 0.1em;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(4px);
+            font-family: 'Cormorant Garamond', serif;
+            text-transform: uppercase;
+        }
+
+        .sacred-button i {
+            color: #b59d7a;
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .sacred-button:hover {
+            background: rgba(40, 45, 55, 0.8);
+            border-color: rgba(200, 170, 130, 0.5);
+            transform: translateY(-3px);
+            color: #f0e2cf;
+        }
+
+        .sacred-button:hover i {
+            transform: translateX(-4px);
+            color: #dac29e;
+        }
+
+        .eternity {
+            display: flex;
+            justify-content: center;
+            margin-top: 3.5rem;
+            color: #7a6e5c;
+            font-size: 1rem;
+            letter-spacing: 0.8rem;
+            opacity: 0.4;
+            border-top: 1px solid rgba(200, 170, 130, 0.1);
+            padding-top: 1.8rem;
+        }
+
+        .eternity i {
+            font-size: 1.1rem;
+            color: #8f826b;
+        }
+
+        hr {
+            display: none;
+        }
+
+        .appear {
+            animation: emerge 1.2s ease;
+        }
+
+        @keyframes emerge {
+            0% {
+                opacity: 0;
+                transform: scale(0.98);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="frame appear">
+    <div class="sanctum">
+
+        <div class="seal">
+            <div class="seal-decoration">
+                <span class="seal-line"></span>
+                <i class="fas fa-asterisk"></i>
+                <span class="seal-line"></span>
+            </div>
+            <h2>Buy A Car</h2>
+            <div class="subtle-crown">
+                <i class="fas fa-crown"></i> <i class="fas fa-shopping-cart"></i> <i class="fas fa-crown"></i>
+            </div>
+        </div>
+
+        <div class="divine">
+            <span class="line"></span>
+            <i class="fas fa-infinity"></i>
+            <span class="line"></span>
+        </div>
+
+        <!-- Информация о пользователе -->
+        <div class="user-reliquary">
+            <div class="user-icon">
+                <i class="fas fa-user"></i>
+            </div>
+            <div class="user-content">
+                <span class="user-label">PURCHASER</span>
+                <span class="user-value" th:text="${modelGetPerson.getName() + ' ' + modelGetPerson.getSurname()}">Ayrton Senna</span>
+            </div>
+        </div>
+
+        <!-- Форма покупки автомобиля -->
+        <form class="sacred-form"
+              th:method="PATCH"
+              th:action="@{/person/{person_id}/buyCar(person_id = ${modelGetPerson.getPerson_id()})}">
+
+            <div class="form-group">
+                <label for="ChooseCar">
+                    <i class="fas fa-car-side"></i> Choose A Car
+                </label>
+                <select th:object="${car}"
+                        th:field="*{car_id}"
+                        id="ChooseCar"
+                        class="sacred-select">
+                    <option th:each="listCar : ${modellistCar}"
+                            th:value="${listCar.getCar_id()}"
+                            th:text="${listCar.getModel()}"
+                            style="background: #1e2126; color: #f0e2cf;">Toyota Chaser
+                    </option>
+                </select>
+            </div>
+
+            <div class="submit-section">
+                <button type="submit" class="sacred-submit">
+                    <i class="fas fa-shopping-cart"></i>
+                    BUY
+                </button>
+            </div>
+        </form>
+
+        <div class="actions">
+            <a th:href="@{/person/{person_id}(person_id = ${modelGetPerson.getPerson_id()})}"
+               class="sacred-button">
+                <i class="fas fa-arrow-left"></i>
+                <span>Back</span>
+            </a>
+        </div>
+
+        <div class="eternity">
+            <i class="fas fa-circle"></i> <i class="fas fa-infinity"></i> <i class="fas fa-circle"></i>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List Car</title>
+</head>
+<body>
+
+<h2> List of Cars</h2>
+
+<div th:each="listCar : ${modelListCar}">
+    <a th:href="@{/car/{car_id}(car_id = ${listCar.getCar_id()})}"
+       th:text="${listCar.getModel()}">...</a>
+</div>
+
+<hr>
+
+<a href="/car/add">Add Car</a>
+
+<hr>
+
+<a href="/">Back</a>
+
+</body>
+</html>

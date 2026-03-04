@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Person</title>
+</head>
+<body>
+
+<h2>Add Person</h2>
+
+<form th:method="POST"
+      th:action="@{/person/add}"
+      th:object="${modelAddPerson}">
+
+    <label for="age">Age </label>
+    <input type="text" th:field="*{age}" id="age">
+
+    <br>
+
+    <label for="name">Name </label>
+    <input type="text" th:field="*{name}" id="name">
+
+    <br>
+
+    <label for="surname">Surname </label>
+    <input type="text" th:field="*{surname}" id="surname">
+
+    <br>
+
+    <input type="submit" value="ADD">
+</form>
+
+<hr>
+
+<a href="/person">Back</a>
+
+</body>
+</html>

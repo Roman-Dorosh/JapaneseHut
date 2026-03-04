@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Buy A Car</title>
+</head>
+<body>
+
+<h2>User</h2>
+<p th:text="${modelGetPerson.getName() + ' ' + modelGetPerson.getSurname()}">...</p>
+
+<hr>
+
+<h2>Buy A Car</h2>
+
+<form th:method="PATCH"
+      th:action="@{/person/{person_id}/buyCar(person_id = ${modelGetPerson.getPerson_id()})}">
+
+    <label for="ChooseCar">Choose A Car:</label>
+    <select th:object="${car}"
+            th:field="*{car_id}"
+            id="ChooseCar">
+
+        <option th:each="listCar : ${modellistCar}"
+                th:value="${listCar.getCar_id()}"
+                th:text="${listCar.getModel()}">...
+        </option>
+    </select>
+
+    <input type="submit" value="BUY">
+</form>
+
+<hr>
+
+<a th:href="@{/person/{person_id}(person_id = ${modelGetPerson.getPerson_id()})}">Back</a>
+
+</body>
+</html>

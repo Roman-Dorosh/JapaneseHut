@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sell Car</title>
+</head>
+<body>
+
+<h2>Car Owner</h2>
+<p th:text="${'NAME > ' + modelGetPerson.getName() + ' ' + modelGetPerson.getSurname()}">...</p>
+
+<h2>Information About The Car</h2>
+
+<p th:text="${'MODEL > ' + modelGetCar.getModel()}">...</p>
+<p th:text="${'EQUIPMENT > ' + modelGetCar.getEquipment()}">...</p>
+<p th:text="${'YEAR OF RELEASE > ' + modelGetCar.getYear_of_release()}">...</p>
+
+<hr>
+
+
+<form th:method="PATCH"
+      th:action="@{/car/{car_id}/{person_id}/sellCar(car_id = ${modelGetCar.getCar_id()}, person_id = ${modelGetPerson.getPerson_id()})}"
+      th:object="${modelGetCar}">
+
+    <input type="submit" value="SELL">
+</form>
+
+
+
+<a th:href="@{/person/{person_id}(person_id = ${modelGetPerson.getPerson_id()})}">Back</a>
+
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Car</title>
+</head>
+<body>
+
+<h2>Add Car</h2>
+
+<form th:method="POST"
+      th:action="@{/car/add}"
+      th:object="${modelAddCar}">
+
+    <label for="model">Model </label>
+    <input type="text" th:field="*{model}" id="model">
+
+    <br>
+
+    <label for="equipment">Equipment </label>
+    <input type="text" th:field="*{equipment}" id="equipment">
+
+    <br>
+
+    <label for="year_of_release">Year Of Release </label>
+    <input type="text" th:field="*{year_of_release}" id="year_of_release">
+
+    <br>
+
+    <input type="submit" value="ADD">
+</form>
+
+<hr>
+
+<a href="/car">Back</a>
+
+</body>
+</html>

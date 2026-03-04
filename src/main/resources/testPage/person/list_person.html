@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List People</title>
+</head>
+<body>
+
+<h2> List of People</h2>
+
+<div th:each="listPerson : ${modelListPerson}">
+    <a th:href="@{/person/{person_id}(person_id = ${listPerson.getPerson_id()})}"
+       th:text="${listPerson.getName() + ' ' + listPerson.getSurname()}">...</a>
+</div>
+
+<hr>
+
+<a href="/person/add">Add Person</a>
+
+<hr>
+
+<a href="/">Back</a>
+
+</body>
+</html>

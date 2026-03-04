@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main · eternal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0e0f12;
+            font-family: 'Cormorant Garamond', 'Times New Roman', serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            position: relative;
+            color: #fffaf0;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle at 15% 85%, rgba(180, 145, 110, 0.08) 0%, transparent 35%),
+            radial-gradient(circle at 80% 20%, rgba(200, 170, 130, 0.05) 0%, transparent 40%),
+            repeating-linear-gradient(45deg, rgba(255, 245, 230, 0.01) 0px, rgba(255, 245, 230, 0.01) 1px, transparent 1px, transparent 8px);
+            pointer-events: none;
+        }
+
+        .frame {
+            max-width: 950px;
+            width: 100%;
+            position: relative;
+            z-index: 20;
+        }
+
+        .sanctum {
+            background: rgba(18, 20, 24, 0.75);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-radius: 48px 16px 48px 16px;
+            border: 1px solid rgba(230, 210, 180, 0.25);
+            box-shadow: 0 40px 70px -30px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(230, 200, 160, 0.1) inset;
+            padding: 4.5rem 3.8rem;
+            transition: all 0.5s ease;
+        }
+
+        @media (max-width: 600px) {
+            .sanctum {
+                padding: 3rem 2rem;
+                border-radius: 36px 12px 36px 12px;
+            }
+        }
+
+        .seal {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        .seal-decoration {
+            display: flex;
+            gap: 1.2rem;
+            align-items: center;
+            margin-bottom: 1.2rem;
+        }
+
+        .seal-decoration i {
+            color: #cbb99b;
+            font-size: 1.1rem;
+            opacity: 0.7;
+        }
+
+        .seal-line {
+            width: 70px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #cbb99b, #e5d5b0, #cbb99b, transparent);
+        }
+
+        h2 {
+            font-size: 6.2rem;
+            font-weight: 400;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #f3ecd9;
+            font-family: 'Cormorant Garamond', serif;
+            line-height: 0.95;
+            text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.3), 4px 6px 15px rgba(0, 0, 0, 0.6);
+            margin-bottom: 0.8rem;
+            word-spacing: 0.2em;
+        }
+
+        .subtle-crown {
+            color: #d8c5a5;
+            font-size: 1.2rem;
+            letter-spacing: 0.6em;
+            margin-top: 0.2rem;
+            opacity: 0.65;
+            font-weight: 300;
+        }
+
+        .divine {
+            display: flex;
+            align-items: center;
+            gap: 1.8rem;
+            margin: 3.2rem 0 4rem 0;
+        }
+
+        .divine .line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(205, 175, 130, 0.4), rgba(230, 200, 150, 0.7), rgba(205, 175, 130, 0.4), transparent);
+        }
+
+        .divine i {
+            color: #baa585;
+            font-size: 1.4rem;
+            opacity: 0.7;
+        }
+
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2.5rem;
+            justify-content: center;
+        }
+
+        .reliquary {
+            flex: 1 1 240px;
+            min-width: 220px;
+            background: rgba(25, 28, 32, 0.7);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(210, 180, 140, 0.25);
+            border-radius: 32px 8px 32px 8px;
+            padding: 2.8rem 1.8rem 2.4rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #f2e6d5;
+            transition: all 0.5s cubic-bezier(0.2, 0.9, 0.4, 1);
+            box-shadow: 0 15px 30px -15px black;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .reliquary::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 30%, rgba(200, 170, 110, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.7s;
+            pointer-events: none;
+        }
+
+        .reliquary:hover {
+            background: rgba(30, 34, 40, 0.85);
+            border-color: rgba(220, 190, 140, 0.5);
+            transform: translateY(-10px) scale(1.01);
+            box-shadow: 0 35px 50px -25px #000000, 0 0 0 1px rgba(230, 205, 150, 0.2) inset;
+        }
+
+        .reliquary:hover::after {
+            opacity: 1;
+        }
+
+        .reliquary i {
+            font-size: 3.8rem;
+            color: #dac29e;
+            margin-bottom: 1.2rem;
+            text-shadow: 0 0 15px rgba(200, 160, 100, 0.4);
+            transition: transform 0.6s ease;
+        }
+
+        .reliquary:hover i {
+            transform: scale(1.1);
+            color: #ecdbba;
+            text-shadow: 0 0 25px #c8a87c;
+        }
+
+        .reliquary span {
+            font-size: 2.8rem;
+            font-weight: 400;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: #f0e2cf;
+            font-family: 'Cormorant Garamond', serif;
+            border-bottom: 1px solid rgba(205, 175, 130, 0.3);
+            padding-bottom: 0.5rem;
+            margin-bottom: 0.7rem;
+            line-height: 1.1;
+        }
+
+        .laurel {
+            display: flex;
+            gap: 0.8rem;
+            color: #b59d7a;
+            font-size: 0.9rem;
+            font-style: italic;
+            letter-spacing: 0.15em;
+            font-weight: 300;
+            margin-top: 0.6rem;
+            opacity: 0.75;
+        }
+
+        .laurel i {
+            font-size: 0.8rem;
+            color: #aa8e64;
+            margin-bottom: 0;
+            text-shadow: none;
+        }
+
+        .eternity {
+            display: flex;
+            justify-content: center;
+            margin-top: 4.5rem;
+            color: #7a6e5c;
+            font-size: 1.1rem;
+            letter-spacing: 0.8rem;
+            opacity: 0.5;
+            border-top: 1px solid rgba(200, 170, 130, 0.15);
+            padding-top: 2rem;
+        }
+
+        .eternity i {
+            font-size: 1.2rem;
+            color: #8f826b;
+        }
+
+        hr {
+            display: none;
+        }
+
+        .appear {
+            animation: emerge 1.4s ease;
+        }
+
+        @keyframes emerge {
+            0% {
+                opacity: 0;
+                transform: scale(0.98);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .reliquary:nth-child(1) {
+            animation-delay: 0.15s;
+        }
+
+        .reliquary:nth-child(2) {
+            animation-delay: 0.3s;
+        }
+    </style>
+</head>
+<body>
+<div class="frame appear">
+    <div class="sanctum">
+
+        <div class="seal">
+            <div class="seal-decoration">
+                <span class="seal-line"></span>
+                <i class="fas fa-asterisk"></i>
+                <span class="seal-line"></span>
+            </div>
+            <h2>Main Page</h2>
+            <div class="subtle-crown">
+                <i class="fas fa-crown"></i> <i class="fas fa-crown"></i> <i class="fas fa-crown"></i>
+            </div>
+        </div>
+
+        <div class="divine">
+            <span class="line"></span>
+            <i class="fas fa-infinity"></i>
+            <span class="line"></span>
+        </div>
+
+        <div class="gallery">
+
+            <a href="/person" class="reliquary">
+                <i class="fas fa-users"></i>
+                <span>People</span>
+                <div class="laurel">
+                    <i class="fas fa-leaf"></i> · humanitas · <i class="fas fa-leaf"></i>
+                </div>
+            </a>
+
+            <a href="/car" class="reliquary">
+                <i class="fas fa-car"></i>
+                <span>Cars</span>
+                <div class="laurel">
+                    <i class="fas fa-leaf"></i> · machina · <i class="fas fa-leaf"></i>
+                </div>
+            </a>
+        </div>
+
+        <div class="eternity">
+            <i class="fas fa-circle"></i> <i class="fas fa-infinity"></i> <i class="fas fa-circle"></i>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

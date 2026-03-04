@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Car</title>
+</head>
+<body>
+
+<h2>Edit Car</h2>
+
+<form th:method="PATCH"
+      th:action="@{/car/{car_id}/edit(car_id = ${modelEditCar.getCar_id()})}"
+      th:object="${modelEditCar}">
+
+    <label for="model">Model </label>
+    <input type="text" th:field="*{model}" id="model">
+
+    <br>
+
+    <label for="equipment">Equipment </label>
+    <input type="text" th:field="*{equipment}" id="equipment">
+
+    <br>
+
+    <label for="year_of_release">Year Of Release </label>
+    <input type="text" th:field="*{year_of_release}" id="year_of_release">
+
+    <br>
+
+    <input type="submit" value="UPDATE">
+</form>
+
+<br>
+
+<form th:method="DELETE"
+      th:action="@{/car/{car_id}/edit(car_id = ${modelEditCar.getCar_id()})}"
+      th:object="${modelEditCar}">
+
+    <input type="submit" value="DELETE">
+</form>
+
+<hr>
+
+<a th:href="@{/car/{car_id}(car_id = ${modelEditCar.getCar_id()})}">Back</a>
+
+</body>
+</html>

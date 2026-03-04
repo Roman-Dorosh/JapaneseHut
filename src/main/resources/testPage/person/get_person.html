@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Information Person</title>
+</head>
+<body>
+
+<h2>Information About A Person</h2>
+
+<p th:text="${'AGE > ' + modelGetPerson.getAge()}">...</p>
+<p th:text="${'NAME > ' + modelGetPerson.getName()}">...</p>
+<p th:text="${'SURNAME >  ' + modelGetPerson.getSurname()}">...</p>
+
+<hr>
+
+<a th:href="@{/person/{person_id}/edit(person_id = ${modelGetPerson.getPerson_id()})}">Edit</a>
+
+<hr>
+
+<h2>Purchased cars</h2>
+
+<div th:each="listCar : ${modelListCars}">
+    <a th:href="@{/car/{car_id}/{person_id}/sellCar(car_id = ${listCar.getCar_id()}, person_id = ${modelGetPerson.getPerson_id()})}"
+       th:text="${listCar.getModel()}">...</a>
+</div>
+
+<a th:href="@{/person/{person_id}/buyCar(person_id = ${modelGetPerson.getPerson_id()})}">Buy Car</a>
+
+<hr>
+
+<a href="/person">Back</a>
+
+</body>
+</html>
