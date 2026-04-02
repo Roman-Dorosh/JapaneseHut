@@ -2,8 +2,8 @@ package org.roman.carsharing.controller;
 
 import org.roman.carsharing.service.impl.CarDataBase;
 import org.roman.carsharing.service.impl.PersonDataBase;
-import org.roman.carsharing.Entity.model.Car;
-import org.roman.carsharing.Entity.model.Person;
+import org.roman.carsharing.model.entity.Car;
+import org.roman.carsharing.model.entity.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -1,4 +1,4 @@
-package org.roman.carsharing.Entity.model;
+package org.roman.carsharing.model.entity;
 
 import jakarta.persistence.*;
 

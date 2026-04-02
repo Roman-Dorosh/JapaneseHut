@@ -1,6 +1,6 @@
 package org.roman.carsharing.service.impl;
 
-import org.roman.carsharing.Entity.model.Person;
+import org.roman.carsharing.model.entity.Person;
 
 import java.util.List;
 

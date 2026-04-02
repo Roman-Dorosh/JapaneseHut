@@ -1,6 +1,6 @@
 package org.roman.carsharing.service;
 
-import org.roman.carsharing.Entity.model.Person;
+import org.roman.carsharing.model.entity.Person;
 import org.roman.carsharing.repository.PersonRepository;
 import org.roman.carsharing.service.impl.PersonDataBase;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,32 +20,39 @@ public class PersonService implements PersonDataBase {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Person> listObject() {
-        return personRepository.listPerson();
+        return personRepository.findAll();
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public Person getObject(int id) {
-        return personRepository.getPerson(id);
+        return personRepository.findById(id).orElse(null);
     }
 
     @Override
     @Transactional
     public void addObject(Person person) {
-        personRepository.addPerson(person);
+        personRepository.save(person);
     }
 
     @Override
     @Transactional
     public void updateObject(Person person, int id) {
-        personRepository.updatePerson(person, id);
+        Person updatePerson = personRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Person not found with id: " + id));
+
+        updatePerson.setAge(person.getAge());
+        updatePerson.setName(person.getName());
+        updatePerson.setSurname(person.getSurname());
     }
 
     @Override
     @Transactional
     public void deleteObject(int id) {
-        personRepository.deletePerson(id);
+        Person person = personRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Person not found with id: " + id));
+        personRepository.delete(person);
     }
 }
