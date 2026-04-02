@@ -1,28 +1,29 @@
-package org.roman.carsharing.model;
+package org.roman.carsharing.Entity.model;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "Car")
 public class Car {
 
+    @Id
+    @Column(name = "car_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int car_id;
-    private int person_id;
+
+    @Column(name = "year_of_release")
     private int year_of_release;
 
+    @Column(name = "model")
     private String model;
+
+    @Column(name = "equipment")
     private String equipment;
 
-    public Car(int car_id, int person_id, String model, int year_of_release, String equipment) {
-        this.car_id = car_id;
-        this.person_id = person_id;
-        this.model = model;
-        this.year_of_release = year_of_release;
-        this.equipment = equipment;
-    }
+    @ManyToOne
+    @JoinColumn(name = "person_id")
+    private Person person;
 
-    public Car(int car_id, int year_of_release, String model, String equipment) {
-        this.car_id = car_id;
-        this.year_of_release = year_of_release;
-        this.model = model;
-        this.equipment = equipment;
-    }
 
     public Car(int year_of_release, String model, String equipment) {
         this.year_of_release = year_of_release;
@@ -65,11 +66,11 @@ public class Car {
         this.equipment = equipment;
     }
 
-    public int getPerson_id() {
-        return person_id;
+    public Person getPerson() {
+        return person;
     }
 
-    public void setPerson_id(int person_id) {
-        this.person_id = person_id;
+    public void setPerson(Person person) {
+        this.person = person;
     }
 }

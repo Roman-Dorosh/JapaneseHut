@@ -1,6 +1,6 @@
-package org.roman.carsharing.dao.person;
+package org.roman.carsharing.service.impl;
 
-import org.roman.carsharing.model.Person;
+import org.roman.carsharing.Entity.model.Person;
 
 import java.util.List;
 
